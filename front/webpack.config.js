@@ -1,11 +1,11 @@
 const path = require("path");
-const webpack = require("webpack");
 
 module.exports = {
-  mode: "development",
-  devtool: "eval", // hidden-source-map
+  mode: "development", // 실서비스 : production
+  devtool: "eval", // 실서비스 : hidden-source-map
   resolve: {
-    extensions: [".jsx", ".js"]
+    extensions: [".jsx", ".js"],
+    alias: { "react-dom": "@hot-loader/react-dom" }
   },
 
   entry: {
@@ -18,7 +18,11 @@ module.exports = {
         test: /\.jsx?/,
         loader: "babel-loader",
         options: {
-          presets: ["@babel/preset-env", "@babel/preset-react"]
+          presets: ["@babel/preset-env", "@babel/preset-react"],
+          plugins: [
+            "@babel/plugin-proposal-class-properties",
+            "react-hot-loader/babel"
+          ]
         }
       }
     ]
@@ -28,6 +32,4 @@ module.exports = {
     path: path.join(__dirname, "dist"),
     filename: "bundle.js"
   }
-
-  //   plugins: [new webpack.LoaderOptionsPlugin({ debug: true })]
 };
