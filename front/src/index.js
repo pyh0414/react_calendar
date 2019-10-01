@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./containers/App";
 import createSagaMiddleware from "redux-saga";
 import { hot } from "react-hot-loader/root";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 
+import App from "./containers/MainApp/";
 import rootReducer from "../reducer";
 import rootSaga from "../saga";
 
