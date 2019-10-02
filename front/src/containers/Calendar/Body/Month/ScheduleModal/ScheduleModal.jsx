@@ -10,22 +10,28 @@ import {
 } from "antd";
 import moment from "moment";
 
+import { useDispatch } from "react-redux";
+
+import { MAKE_SCHEDULE_REQUEST } from "../../../../../../reducer/schedule";
+
 const ScheduleModal = ({ setmodalVisibleProps }) => {
-  const [modalVisible, setmodalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(true);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [radio, setRadio] = useState("");
+  const [period, setPeriod] = useState("");
   const [startDate, setStartDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endDate, setEndDate] = useState("");
   const [endTime, setEndTime] = useState("");
 
+  const dispatch = useDispatch();
+
   const onHandleCancel = useCallback(() => {
-    setmodalVisible(false);
+    setModalVisible(false);
   }, []);
 
   const onHandleOk = useCallback(() => {
-    setmodalVisible(false);
+    setModalVisible(false);
   }, []);
 
   const onHandleSubmit = useCallback(() => {
@@ -35,26 +41,32 @@ const ScheduleModal = ({ setmodalVisibleProps }) => {
     if (content.trim() == "") {
       return message.error("일정 내용을 입력해 주세요 !!");
     }
-    if (radio == "") {
+    if (period == "") {
       return message.error("반복주기를 선택해 주세요 !!");
     }
-    if (startDate == "" || startTime == "" || endDate == "" || endTime == "") {
-      return message.error("날짜 또는 시간정보를 입력해 주세요 !!");
+    if (startDate == "" || endDate == "") {
+      return message.error("날짜정보를 입력해 주세요 !!");
+    }
+
+    if (startTime == "" || endTime == "") {
+      if (period <= 3) {
+        return message.error("시간정보를 입력해 주세요 !!");
+      }
     }
 
     const splitedStartDate = startDate.split("-");
     const startYear = splitedStartDate[0];
     const startMonth = splitedStartDate[1];
     const startDay = splitedStartDate[2];
-    const startTimeHour = startTime[0];
-    const startTimeMin = startTime[1];
+    const startTimeHour = startTime[0] || 0;
+    const startTimeMin = startTime[1] || 0;
 
     const splitedEndDate = endDate.split("-");
     const endYear = splitedEndDate[0];
     const endMonth = splitedEndDate[1];
     const endDay = splitedEndDate[2];
-    const endTimeHour = endTime[0];
-    const endTimeMin = endTime[1];
+    const endTimeHour = endTime[0] || 0;
+    const endTimeMin = endTime[1] || 0;
 
     const start = new Date(
       startYear,
@@ -64,10 +76,14 @@ const ScheduleModal = ({ setmodalVisibleProps }) => {
       startTimeMin
     );
     const end = new Date(endYear, endMonth, endDay, endTimeHour, endTimeMin);
+    const data = { title, content, period, start, end };
 
-    console.log(start, end);
+    dispatch({
+      type: MAKE_SCHEDULE_REQUEST,
+      data
+    });
 
-    setmodalVisible(false);
+    setModalVisible(false);
   });
 
   const onHandleTitle = useCallback(e => {
@@ -78,8 +94,8 @@ const ScheduleModal = ({ setmodalVisibleProps }) => {
     setContent(e.target.value);
   }, []);
 
-  const onHandleRadio = useCallback(e => {
-    setRadio(e.target.value);
+  const onHandlePeriod = useCallback(e => {
+    setPeriod(e.target.value);
   }, []);
 
   const onHandleStartDate = useCallback(
@@ -119,7 +135,7 @@ const ScheduleModal = ({ setmodalVisibleProps }) => {
   useEffect(() => {
     // mdoel 컴포넌트가 종료될 때 modal은 on하고 부모컴포넌트의 modal은 off함
     return () => {
-      setmodalVisible(true);
+      setModalVisible(true);
       setmodalVisibleProps(false);
     };
   }, [modalVisible]);
@@ -158,7 +174,7 @@ const ScheduleModal = ({ setmodalVisibleProps }) => {
           />
         </div>
         <br />
-        <Radio.Group onChange={onHandleRadio} value={radio}>
+        <Radio.Group onChange={onHandlePeriod} value={period}>
           <Radio value={1}>매일</Radio>
           <Radio value={2}>매월</Radio>
           <Radio value={3}>매주</Radio>
@@ -173,7 +189,7 @@ const ScheduleModal = ({ setmodalVisibleProps }) => {
         />
         &emsp;
         <TimePicker
-          disabled={radio == 4 ? true : false}
+          disabled={period == 4 ? true : false}
           placeholder="시작 시간"
           onChange={onHandleStartTime}
           defaultOpenValue={moment("00:00:00", "HH:mm")}
@@ -188,7 +204,7 @@ const ScheduleModal = ({ setmodalVisibleProps }) => {
         />
         &emsp;
         <TimePicker
-          disabled={radio == 4 ? true : false}
+          disabled={period == 4 ? true : false}
           placeholder="종료 시간"
           onChange={onHandleEndTime}
           defaultOpenValue={moment("00:00:00", "HH:mm")}
