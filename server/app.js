@@ -7,6 +7,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 
 const scheduleRouter = require("./routes/schedule");
+const scheduleRouters = require("./routes/schedules");
 
 const db = require("./models");
 const app = express();
@@ -29,6 +30,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/schedule", scheduleRouter);
+app.use("/schedules", scheduleRouters);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
