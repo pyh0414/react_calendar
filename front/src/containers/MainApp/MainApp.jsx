@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { Wrapper, Calendar } from "./style.js";
 
 import Head from "../Calendar/Head";
 import Body from "../Calendar/Body";
 
-import { INITIALIZE_CURRENT_DATE } from "../../../reducer/schedule";
+import {
+  INITIALIZE_CURRENT_DATE,
+  LOAD_SCHEDULES_REQUEST
+} from "../../../reducer/schedule";
 
 const MainAp = () => {
   const dispatch = useDispatch();
@@ -16,6 +19,9 @@ const MainAp = () => {
     dispatch({
       type: INITIALIZE_CURRENT_DATE,
       data: new Date()
+    });
+    dispatch({
+      type: LOAD_SCHEDULES_REQUEST
     });
   }, []);
 

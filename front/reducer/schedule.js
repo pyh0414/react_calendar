@@ -14,6 +14,10 @@ export const MAKE_SCHEDULE_REQUEST = "MAKE_SCHEDULE_REQUEST";
 export const MAKE_SCHEDULE_SUCCESS = "MAKE_SCHEDULE_SUCCESS";
 export const MAKE_SCHEDULE_FAILURE = "MAKE_SCHEDULE_FAILURE";
 
+export const LOAD_SCHEDULES_REQUEST = "LOAD_SCHEDULES_REQUEST";
+export const LOAD_SCHEDULES_SUCCESS = "LOAD_SCHEDULES_SUCCESS";
+export const LOAD_SCHEDULES_FAILURE = "LOAD_SCHEDULES_FAILURE";
+
 export default (state = initialState, action) => {
   return produce(state, draft => {
     switch (action.type) {
@@ -31,6 +35,11 @@ export default (state = initialState, action) => {
       }
       case MAKE_SCHEDULE_SUCCESS: {
         draft.schedules.push(action.data);
+        break;
+      }
+
+      case LOAD_SCHEDULES_SUCCESS: {
+        draft.schedules = action.data;
         break;
       }
     }
