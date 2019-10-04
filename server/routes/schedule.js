@@ -14,10 +14,11 @@ router.post("/", async (req, res, next) => {
     period
   })
     .then(result => {
-      return res.json(result);
+      return res.status(200).json(result);
     })
     .catch(err => {
-      next(err);
+      console.error(err);
+      return next(err);
     });
 });
 
