@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import App from "./containers/MainApp/";
+import App from "./containers/App/";
 import rootReducer from "../reducer";
 import rootSaga from "../saga";
 

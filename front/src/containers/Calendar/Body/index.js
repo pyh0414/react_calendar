@@ -1,3 +1,3 @@
-import index from "./Body.jsx";
+import index from "./Index.jsx";
 
 export default index;

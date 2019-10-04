@@ -6,7 +6,7 @@ const ButtonGroup = Button.Group;
 export const Wrapper = styled.div`
   display: flex;
   padding: 1.5em;
-  border-bottom: 1px solid #f2f2f2;
+  border-bottom: 1px solid #a4a4a4;
   text-align: center;
 `;
 

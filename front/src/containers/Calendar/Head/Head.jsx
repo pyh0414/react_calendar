@@ -40,20 +40,6 @@ const Header = () => {
       <Left type="left" onClick={onPreMonth} />
       <Date>{date}</Date>
       <Right type="right" onClick={onNextMonth} />
-      <Mode>
-        <Button
-          type={mode === "day" ? "primary" : "dashed"}
-          onClick={onChangeMode}
-        >
-          day
-        </Button>
-        <Button
-          type={mode === "month" ? "primary" : "dashed"}
-          onClick={onChangeMode}
-        >
-          month
-        </Button>
-      </Mode>
     </Wrapper>
   );
 };
