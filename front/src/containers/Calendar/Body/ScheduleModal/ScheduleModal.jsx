@@ -83,6 +83,10 @@ const ScheduleModal = ({ setmodalVisibleProps, day }) => {
         new Date(endYear, endMonth - 1, endDay, endTimeHour, endTimeMin)
       ) * 1000;
 
+    if (start >= end) {
+      return message.error("시작시간이 종료시간보다 같거나 빠릅니다 !!");
+    }
+
     const data = { title, content, period, start, end };
 
     dispatch({
