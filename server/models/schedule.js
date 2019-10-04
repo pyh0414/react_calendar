@@ -11,11 +11,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       start_time: {
-        type: DataTypes.DATE,
+        type: DataTypes.BIGINT(11),
         allowNull: false
       },
       end_time: {
-        type: DataTypes.DATE,
+        type: DataTypes.BIGINT(11),
         allowNull: false
       },
       period: {
