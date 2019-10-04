@@ -85,11 +85,16 @@ const Col = props => {
   });
 
   const formattedDay = format(day, "d");
+  const isToday = isSameDay(new Date(), new Date(day));
   return (
     <Wrapper sameMonth={sameMonth}>
       <Header>
         <div style={{ cursor: "pointer" }} onClick={modifySelectedDate}>
-          {formattedDay}
+          <span
+            style={{ color: isToday && "red", fontWeight: isToday && "bold" }}
+          >
+            {formattedDay}
+          </span>
         </div>
         {sameMonth && (
           <div
