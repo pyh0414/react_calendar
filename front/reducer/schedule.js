@@ -4,7 +4,10 @@ export const initialState = {
   currentDate: null,
   selectedDate: null,
   mode: "month",
-  schedules: []
+  schedules: [],
+  makeScheduleResult: true,
+  makeScheduleFinished: false,
+  makeScheduleResultMessage: ""
 };
 
 export const INITIALIZE_CURRENT_DATE = "INITIALIZE_CURRENT_DATE";
@@ -41,8 +44,26 @@ export default (state = initialState, action) => {
         draft.mode = action.data;
         break;
       }
+
+      case MAKE_SCHEDULE_REQUEST: {
+        draft.makeScheduleFinished = false;
+        draft.makeScheduleResult = false;
+        draft.makeScheduleResultMessage = "";
+        break;
+      }
+
       case MAKE_SCHEDULE_SUCCESS: {
         draft.schedules.push(action.data);
+        draft.makeScheduleFinished = true;
+        draft.makeScheduleResult = true;
+        draft.makeScheduleResultMessage = "일정이 추가되었습니다.";
+        break;
+      }
+
+      case MAKE_SCHEDULE_FAILURE: {
+        draft.makeScheduleFinished = true;
+        draft.makeScheduleResult = false;
+        draft.makeScheduleResultMessage = "일장 추가에 실패하였습니다.";
         break;
       }
 

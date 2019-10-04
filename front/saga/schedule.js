@@ -17,10 +17,17 @@ function makeScheduleAPI(data) {
 function* makeSchedule(action) {
   try {
     const result = yield call(makeScheduleAPI, action.data);
-    yield put({
-      type: MAKE_SCHEDULE_SUCCESS,
-      data: result && result.data
-    });
+
+    if (result && result.data) {
+      yield put({
+        type: MAKE_SCHEDULE_SUCCESS,
+        data: result && result.data
+      });
+    } else {
+      yield put({
+        type: MAKE_SCHEDULE_FAILURE
+      });
+    }
   } catch (err) {
     console.error(err);
     yield put({
