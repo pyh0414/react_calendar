@@ -3,7 +3,7 @@ import format from "date-fns/format";
 import subMonths from "date-fns/subMonths";
 import addMonths from "date-fns/addMonths";
 import { useSelector, useDispatch } from "react-redux";
-import { Button } from "antd";
+import { message } from "antd";
 
 import { Wrapper, Left, Right, Date, Mode } from "./style";
 
@@ -26,20 +26,23 @@ const Header = () => {
       type: MODIFY_CURRENT_DATE,
       data: addMonths(currentDate, 1)
     });
-  }, [currentDate]); // currentDate 안넣어주면 처음 rendering될 때 한번만 함수가 생성되서 그때의 currentDate=null이게 됨...
+  }, [currentDate]);
 
-  const onChangeMode = useCallback(() => {
-    const newMode = mode === "day" ? "month" : "day";
-    dispatch({
-      type: CHANGE_MODE,
-      data: newMode
-    });
-  }, [mode]);
+  const onChangeMonthFail = useCallback(() => {
+    return message.error("day 모드에서는 날짜를 조작할 수 없습니다");
+  }, []);
+
   return (
     <Wrapper>
-      <Left type="left" onClick={onPreMonth} />
+      <Left
+        type="left"
+        onClick={mode === "month" ? onPreMonth : onChangeMonthFail}
+      />
       <Date>{date}</Date>
-      <Right type="right" onClick={onNextMonth} />
+      <Right
+        type="right"
+        onClick={mode === "month" ? onNextMonth : onChangeMonthFail}
+      />
     </Wrapper>
   );
 };
