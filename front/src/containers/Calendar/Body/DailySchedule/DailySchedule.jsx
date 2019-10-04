@@ -31,7 +31,7 @@ const Day = () => {
       const isStartSameDay = isSameDay(startDate, day);
       const isEndSameDay = isSameDay(endDate, day);
 
-      if (isStartSameDay || (isEndSameDay && (isBeforeStart && isAfterStart))) {
+      if (isStartSameDay || (isEndSameDay || (isBeforeStart && isAfterStart))) {
         const start = format(startDate, "yyyy-MM-dd HH:mm");
         const end = format(endDate, "yyyy-MM-dd HH:mm");
 
