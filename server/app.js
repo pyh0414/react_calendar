@@ -2,18 +2,13 @@ const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-const logger = require("morgan");
 const cors = require("cors");
-const dotenv = require("dotenv");
 
 const scheduleRouter = require("./routes/schedule");
 const scheduleRouters = require("./routes/schedules");
 
 const db = require("./models");
 const app = express();
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'pug');
 
 db.sequelize.sync();
 app.use(
@@ -26,7 +21,7 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "views")));
 
 app.use("/schedule", scheduleRouter);
 app.use("/schedules", scheduleRouters);
