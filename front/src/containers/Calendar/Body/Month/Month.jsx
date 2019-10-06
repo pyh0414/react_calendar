@@ -25,7 +25,7 @@ const Month = () => {
 
   const renderMonthDays = () => {
     const startMonth = startOfMonth(currentDate);
-    const startDate = startOfWeek(currentDate);
+    const startDate = startOfWeek(startMonth);
     const endDate = endOfMonth(currentDate);
 
     let rows = [];
